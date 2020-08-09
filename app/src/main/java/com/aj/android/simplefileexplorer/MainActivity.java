@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         layoutManager = new LinearLayoutManager(this);
         fileRecycler.setLayoutManager(layoutManager);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.line_divider, getTheme()));
+        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.line_divider, getTheme()));        // separate item by a vertical line
         fileRecycler.addItemDecoration(itemDecoration);
         fileRecycler.setAdapter(fileAdapter);
     }
@@ -63,12 +63,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<ArrayList<FileData>> onCreateLoader(int id, @Nullable Bundle args) {
         return new AsyncTaskLoader<ArrayList<FileData>>(this) {
 
-
             @Override
             protected void onStartLoading() {
-                forceLoad();
+                forceLoad(); //Force an asynchronous load
             }
-
             @Nullable
             @Override
             public ArrayList<FileData> loadInBackground() {
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(@NonNull Loader<ArrayList<FileData>> loader) {
-        fileAdapter.setData(null);
+        fileAdapter.setData(null); //set adapter data to null when DestroyLoader is called
     }
 
     @Override
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         File clickedFile = new File(fileDataArrayList.get(position).getFileUri());
         if (clickedFile.isDirectory()) {
             fileDir = clickedFile;
-            loaderManager.restartLoader(FILE_LOADER_ID, null, this);
+            loaderManager.restartLoader(FILE_LOADER_ID, null, this); //load files and folder in Directory(fileDir)
         }
     }
 
@@ -114,8 +112,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             super.onBackPressed();
         else {
             fileDir = fileDir.getParentFile();
-            loaderManager.restartLoader(FILE_LOADER_ID, null, this);
+            loaderManager.restartLoader(FILE_LOADER_ID, null, this); //go back to parent Folder
         }
-        Log.d(TAG, "onBackPressed: " + fileDir.getPath() + "==>" + Environment.getExternalStorageState());
     }
 }
