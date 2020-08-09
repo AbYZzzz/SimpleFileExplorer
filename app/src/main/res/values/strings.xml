@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SimpleFileExplorer</string>
+    <string name="folder_name">Folder Name</string>
+    <string name="no_file_found">No File found</string>
+    <string name="size">size</string>
+</resources>
